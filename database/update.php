@@ -6,17 +6,16 @@
  * and open the template in the editor.
  */
 
-
-$host = "localhost";
-$user = "root";
-$database = "pup";
-$password = "";
-$conn = mysqli_connect($host, $user, $password, $database);
+require_once 'config.php';
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
 if($conn){
     echo "Database Connected"."<br><br>";
 }
+
 updateTemp($conn);
 updateSpeed($conn);
+mysqli_close($conn);
+
 function updateTemp($conn){
     $file = "data/engtemp.txt";
     $lines = file_get_contents($file);
