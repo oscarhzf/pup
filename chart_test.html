@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    </head>
+    <body>
+        <div id="container" style="width:1000px;height:500px"></div>
+        <div id="container2" style="width:1000px;height:500px"></div>
+        <script>
+            var chart = Highcharts.chart('container', {
+	chart: {
+		type: 'spline'
+	},
+	title: {
+		text: 'PUP Vehicle Engine Speed vs.time'
+	},
+	subtitle: {
+		text: 'Test Data'
+	},
+	xAxis: {
+		type: 'datetime',
+		title: {
+			text: 'Time'
+		}
+	},
+	colors: ['#6CF'],
+	yAxis: {
+		title: {
+			text: 'Engine Speed (rpm)'
+		},
+		min: 0
+	},
+	tooltip: {
+		headerFormat: '<b>{series.name}</b><br>',
+		pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+	},
+	plotOptions: {
+		spline: {
+			marker: {
+				enabled: true
+			}
+		}
+	},
+	series: [{
+		name: 'Engine Speed vs.Time',
+		data: [
+			[Date.UTC(2021,  2, 27,10,8,0), 0    ],
+                        [Date.UTC(2021, 2, 27,10,8,10), 2000 ],
+                        [Date.UTC(2021,  2, 27,10,8,20), 2800],
+			[Date.UTC(2021, 2, 27,10,8,30), 2300 ],
+                        [Date.UTC(2021,  2, 27,10,8,40), 2500],
+			[Date.UTC(2021, 2, 27,10,8,50), 1000 ],
+                        [Date.UTC(2021,  2, 27,10,9,0), 2000 ],
+			[Date.UTC(2021, 2, 27,10,9,10), 3000 ],
+			
+		]
+	
+	}]
+});
+var chart1 = Highcharts.chart('container2', {
+	chart: {
+		type: 'spline'
+	},
+	title: {
+		text: 'Temperature vs.time'
+	},
+	subtitle: {
+		text: 'Test Data'
+	},
+	xAxis: {
+		type: 'datetime',
+		title: {
+			text: 'Time'
+		}
+	},
+	colors: ['#6CF'],
+	yAxis: {
+		title: {
+			text: 'Temperature (Celsius degree)'
+		},
+		min: 0
+	},
+	tooltip: {
+		headerFormat: '<b>{series.name}</b><br>',
+		pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+	},
+	plotOptions: {
+		spline: {
+			marker: {
+				enabled: true
+			}
+		}
+	},
+	series: [{
+		name: 'Temperature vs.Time',
+		data: [
+			[Date.UTC(2021,  2, 27,10,8,0), 3.8  ],
+                        [Date.UTC(2021, 2, 27,10,8,10), 5.0 ],
+                        [Date.UTC(2021,  2, 27,10,8,20), 7.9],
+			[Date.UTC(2021, 2, 27,10,8,30), 7.8 ],
+                        [Date.UTC(2021,  2, 27,10,8,40), 10],
+			[Date.UTC(2021, 2, 27,10,8,50), 11 ],
+                        [Date.UTC(2021,  2, 27,10,9,0), 13 ],
+			[Date.UTC(2021, 2, 27,10,9,10), 12 ],
+			
+		]
+	
+	}]
+});
+
+        </script>
+    </body>
+</html>
