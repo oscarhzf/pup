@@ -13,86 +13,113 @@ and open the template in the editor.
         <?php
         require_once './database/update.php';
         require_once './database/extract.php';
-        echo json_encode($temp);
-        //$data = array(43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175);
+        echo json_encode($temp).'<br>';
+        echo json_encode($speed);
+       
         ?>
         
     </body>
 </html>
-
-<!--<html>
+<!DOCTYPE HTML>
+<html>
     <head>
-        <meta charset="utf-8"><link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            /* css 代码  */
-        </style>
         <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
-        <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com.cn/highcharts/modules/series-label.js"></script>
-        <script src="https://code.highcharts.com.cn/highcharts/modules/oldie.js"></script>
-        <script src="https://code.highcharts.com.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
     </head>
     <body>
-        <div id="container" style="max-width:800px;height:400px"></div>
+        <div id="container" style="width:1000px;height:500px"></div>
+        <div id="container2" style="width:1000px;height:500px"></div>
         <script>
-            var table = <?php echo json_encode($temp);?>;
+            var engspeeddata=<?php echo json_encode($speed);?>;
+            var engtempdata=<?php echo json_encode($temp);?>;
+            var seriesDataspeed = []
+						engspeeddata.forEach(item=>{
+							seriesDataspeed.push([Date.UTC(item[0], item[1]-1, item[2],item[3],item[4],item[5]), item[6] ])
+						})
+            var seriesDatatemp = []
+						engtempdata.forEach(item=>{
+							seriesDatatemp.push([Date.UTC(item[0], item[1]-1, item[2],item[3],item[4],item[5]), item[6] ])
+						})
             var chart = Highcharts.chart('container', {
+	chart: {
+		type: 'spline'
+	},
+	title: {
+		text: 'PUP Vehicle Engine Speed vs.time'
+	},
+	subtitle: {
+		text: 'Test Data'
+	},
+	xAxis: {
+		type: 'datetime',
 		title: {
-				text: '2010 ~ 2016 年太阳能行业就业人员发展情况'
-		},
-		subtitle: {
-				text: '数据来源：thesolarfoundation.com'
-		},
-		yAxis: {
-				title: {
-						text: '就业人数'
-				}
-		},
-		legend: {
-				layout: 'vertical',
-				align: 'right',
-				verticalAlign: 'middle'
-		},
-		plotOptions: {
-				series: {
-						label: {
-								connectorAllowed: false
-						},
-						pointStart: 2010
-				}
-		},
-		series: [{
-				name: '安装，实施人员',
-				data: <?php echo json_encode($data);?>
-		}, {
-				name: '工人',
-				data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-		}, {
-				name: '销售',
-				data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-		}, {
-				name: '项目开发',
-				data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-		}, {
-				name: '其他',
-				data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-		}],
-		responsive: {
-				rules: [{
-						condition: {
-								maxWidth: 500
-						},
-						chartOptions: {
-								legend: {
-										layout: 'horizontal',
-										align: 'center',
-										verticalAlign: 'bottom'
-								}
-						}
-				}]
+			text: 'Time'
 		}
+	},
+	colors: ['#6CF'],
+	yAxis: {
+		title: {
+			text: 'Engine Speed (rpm)'
+		},
+		min: 0
+	},
+	tooltip: {
+		headerFormat: '<b>{series.name}</b><br>',
+		pointFormat: '{point.x:%e. %b}: {point.y:.f}rpm'
+	},
+	plotOptions: {
+		spline: {
+			marker: {
+				enabled: true
+			}
+		}
+	},
+	series: [{
+		name: 'Engine Speed vs.Time',
+		data: seriesDataspeed
+	}]
 });
+var chart1 = Highcharts.chart('container2', {
+	chart: {
+		type: 'spline'
+	},
+	title: {
+		text: 'Temperature vs.time'
+	},
+	subtitle: {
+		text: 'Test Data'
+	},
+	xAxis: {
+		type: 'datetime',
+		title: {
+			text: 'Time'
+		}
+	},
+	colors: ['#6CF'],
+	yAxis: {
+		title: {
+			text: 'Temperature (Celsius degree)'
+		},
+		min: 0
+	},
+	tooltip: {
+		headerFormat: '<b>{series.name}</b><br>',
+		pointFormat: '{point.x:%e. %b}: {point.y:.2f} '
+	},
+	plotOptions: {
+		spline: {
+			marker: {
+				enabled: true
+			}
+		}
+	},
+	series: [{
+		name: 'Temperature vs.Time',
+		data: seriesDatatemp
+	
+	}]
+});
+
         </script>
     </body>
 </html>
+
