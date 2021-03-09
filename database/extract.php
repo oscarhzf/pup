@@ -14,7 +14,7 @@ if(!$conn){
 $temp = extractTemp($conn);
 $speed = extractSpeed($conn);
 function extractTemp($conn){
-    $sql = "SELECT * From engtemp";
+    $sql = "SELECT * From engtemp ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
@@ -32,7 +32,7 @@ function extractTemp($conn){
     }
 }
 function extractSpeed($conn){
-    $sql = "SELECT * From engspeed";
+    $sql = "SELECT * From engspeed ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();

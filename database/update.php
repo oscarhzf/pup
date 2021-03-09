@@ -25,13 +25,15 @@ function updateTemp($conn){
     $error = 0;
     foreach ($line as $li){
         $arr = explode(" ",$li);
-        if(!findDataByDateAndTime($arr[0], $arr[1], 'engtemp', $conn)){
-            if($arr[2] >= 0 & $arr[2] <= 300){
-                $num += insertTemp($arr[0], $arr[1], $arr[2], $conn);  
-            }else{
-                $error ++;
+        if(count($arr) == 4){
+            if(!findDataByDateAndTime($arr[0], $arr[1], 'engtemp', $conn)){
+                if($arr[2] >= 0 & $arr[2] <= 300){
+                    $num += insertTemp($arr[0], $arr[1], $arr[2], $arr[3], $conn);  
+                }else{
+                    $error ++;
+                }
+                $new ++;
             }
-            $new ++;
         }
     }
     echo "Update Engine Temperature<br>";
@@ -48,13 +50,15 @@ function updateSpeed($conn){
     $error = 0;
     foreach ($line as $li){
         $arr = explode(" ",$li);
-        if(!findDataByDateAndTime($arr[0], $arr[1], 'engspeed', $conn)){
-            if($arr[2] >= 0 & $arr[2] <= 4000){
-                $num += insertSpeed($arr[0], $arr[1], $arr[2], $conn);  
-            }else{
-                $error ++;
+        if(count($arr) == 4){
+            if(!findDataByDateAndTime($arr[0], $arr[1], 'engspeed', $conn)){
+                if($arr[2] >= 0 & $arr[2] <= 4000){
+                    $num += insertSpeed($arr[0], $arr[1], $arr[2], $arr[3], $conn);  
+                }else{
+                    $error ++;
+                }
+                $new ++;
             }
-            $new ++;
         }
     }
     echo "Update Engine Speed<br>";
@@ -70,7 +74,7 @@ function updateGPS($conn){
     foreach ($line as $li){
         $arr = explode(" ",$li);
         if(!findDataByDateAndTime($arr[0], $arr[1], 'gps', $conn)){
-            $num += insertGPS($arr[0], $arr[1], $arr[2], $arr[3], $conn);
+            $num += insertGPS($arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $conn);
         }
     }
     echo $num." data(s) added to GPS";
@@ -85,9 +89,9 @@ function findDataByDateAndTime ($date, $time, $table, $conn){
     }
     return $flag;
 }
-function insertTemp($date, $time, $temp, $conn){
+function insertTemp($date, $time, $temp, $id, $conn){
     $flag = 0;
-    $sql = "INSERT INTO engtemp VALUES ('$date', '$time', '$temp')";
+    $sql = "INSERT INTO engtemp VALUES ('$date', '$time', '$temp', '$id')";
     if(mysqli_query($conn, $sql)){
         $flag = 1;
     }else{
@@ -95,9 +99,9 @@ function insertTemp($date, $time, $temp, $conn){
     }
     return $flag;
 }
-function insertSpeed($date, $time, $speed, $conn){
+function insertSpeed($date, $time, $speed, $id, $conn){
     $flag = 0;
-    $sql = "INSERT INTO engspeed VALUES ('$date', '$time', '$speed')";
+    $sql = "INSERT INTO engspeed VALUES ('$date', '$time', '$speed', '$id')";
     if(mysqli_query($conn, $sql)){
         $flag = 1;
     }else{
@@ -105,9 +109,9 @@ function insertSpeed($date, $time, $speed, $conn){
     }
     return $flag;
 }
-function insertGPS($date, $time, $latitude, $longitude, $conn){
+function insertGPS($date, $time, $latitude, $longitude, $id, $conn){
     $flag = 0;
-    $sql = "INSERT INTO gps VALUES ('$date', '$time', '$latitude', '$longitude')";
+    $sql = "INSERT INTO gps VALUES ('$date', '$time', '$latitude', '$longitude', '$id')";
     if(mysqli_query($conn, $sql)){
         $flag = 1;
     }else{
