@@ -97,13 +97,13 @@ var chart1 = Highcharts.chart('container2', {
 	colors: ['#6CF'],
 	yAxis: {
 		title: {
-			text: 'Temperature (Celsius degree)'
+			text: 'Temperature (Fahrenheit degree)'
 		},
 		min: 0
 	},
 	tooltip: {
 		headerFormat: '<b>{series.name}</b><br>',
-		pointFormat: '{point.x:%e. %b}: {point.y:.2f} '
+		pointFormat: '{point.x:%e. %b}: {point.y:.2f} F'
 	},
 	plotOptions: {
 		spline: {
@@ -122,4 +122,3 @@ var chart1 = Highcharts.chart('container2', {
         </script>
     </body>
 </html>
-
