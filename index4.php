@@ -13,9 +13,6 @@ and open the template in the editor.
         <?php
         require_once './database/update.php';
         require_once './database/extract.php';
-        echo json_encode($temp).'<br>';
-        echo json_encode($speed);
-       
         ?>
         
     </body>
@@ -199,21 +196,42 @@ and open the template in the editor.
 						let engtempdata=[]
 						switch (item) {
 							case 'Vehicle 1': 
+                                                                <?php
+                                                                $speed = extractSpeed($conn, 1);
+                                                                $temp = extractTemp($conn, 1);
+                                                                ?>
 								engspeeddata=<?php echo json_encode($speed);?>;
 								engtempdata=<?php echo json_encode($temp);?>;
 								break;
 							case 'Vehicle 2':
-
+                                                                <?php
+                                                                $speed = extractSpeed($conn, 2);
+                                                                $temp = extractTemp($conn, 2);
+                                                                ?>
+								engspeeddata=<?php echo json_encode($speed);?>;
+								engtempdata=<?php echo json_encode($temp);?>;
 								break;
 							case 'Vehicle 3': 
+                                                                <?php
+                                                                $speed = extractSpeed($conn, 3);
+                                                                $temp = extractTemp($conn, 3);
+                                                                ?>
 								engspeeddata=<?php echo json_encode($speed);?>;
 								engtempdata=<?php echo json_encode($temp);?>;
 								break;
 							case 'Vehicle 4': 
+                                                                <?php
+                                                                $speed = extractSpeed($conn, 4);
+                                                                $temp = extractTemp($conn, 4);
+                                                                ?>
 								engspeeddata=<?php echo json_encode($speed);?>;
 								engtempdata=<?php echo json_encode($temp);?>;
 								break;
 							case 'Vehicle 5': 
+                                                                <?php
+                                                                $speed = extractSpeed($conn, 5);
+                                                                $temp = extractTemp($conn, 5);
+                                                                ?>
 								engspeeddata=<?php echo json_encode($speed);?>;
 								engtempdata=<?php echo json_encode($temp);?>;
 								break;

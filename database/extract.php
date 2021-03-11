@@ -11,10 +11,8 @@ $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
 if(!$conn){
     die("Database Connection Failed " . mysqli_connect_error()."<br><br>");
 }
-$temp = extractTemp($conn);
-$speed = extractSpeed($conn);
-function extractTemp($conn){
-    $sql = "SELECT * From engtemp ORDER BY date, time";
+function extractTemp($conn, $id){
+    $sql = "SELECT * From engtemp WHERE id = '$id' ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
@@ -31,8 +29,8 @@ function extractTemp($conn){
         return $content;
     }
 }
-function extractSpeed($conn){
-    $sql = "SELECT * From engspeed ORDER BY date, time";
+function extractSpeed($conn, $id){
+    $sql = "SELECT * From engspeed WHERE id = '$id' ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
