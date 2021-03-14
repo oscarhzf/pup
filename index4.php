@@ -74,6 +74,13 @@ and open the template in the editor.
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
     </head>
     <body>
+        <form action="" method="post">
+            <div>
+                <label for="date">Select Date:</label>
+                <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
+                <input type="submit" name="submit" value="Submit"/>
+            </div>
+        </form>
 		<div id="app">
 			<div class="side">
 				<div v-for="item in che" :key="item" class="che" @click="clickItem(item)">{{item}}</div>
@@ -194,46 +201,42 @@ and open the template in the editor.
 					changeChe(item){
 						let engspeeddata=[]
 						let engtempdata=[]
+                                                <?php $date = isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>
 						switch (item) {
 							case 'Vehicle 1': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 1);
-                                                                $temp = extractTemp($conn, 1);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 1, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 1, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 2':
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 2);
-                                                                $temp = extractTemp($conn, 2);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 2, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 2, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 3': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 3);
-                                                                $temp = extractTemp($conn, 3);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 3, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 3, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 4': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 4);
-                                                                $temp = extractTemp($conn, 4);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 4, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 4, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 5': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 5);
-                                                                $temp = extractTemp($conn, 5);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 5, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 5, $date);
+                                                                ?>;
 								break;
 						}
 						let seriesDataspeed = []

@@ -11,8 +11,8 @@ $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
 if(!$conn){
     die("Database Connection Failed " . mysqli_connect_error()."<br><br>");
 }
-function extractTemp($conn, $id){
-    $sql = "SELECT * From engtemp WHERE id = '$id' ORDER BY date, time";
+function extractTemp($conn, $id, $date){
+    $sql = "SELECT * From engtemp WHERE id = '$id' AND date = '$date' ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
@@ -26,11 +26,11 @@ function extractTemp($conn, $id){
             $num = stringToFloat($svalue);
             $content[] = $num;
         }
-        return $content;
+        echo "engtempdata=".json_encode($content);
     }
 }
-function extractSpeed($conn, $id){
-    $sql = "SELECT * From engspeed WHERE id = '$id' ORDER BY date, time";
+function extractSpeed($conn, $id, $date){
+    $sql = "SELECT * From engspeed WHERE id = '$id' AND date = '$date' ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
@@ -44,7 +44,7 @@ function extractSpeed($conn, $id){
             $num = stringToFloat($svalue);
             $content[] = $num;
         }
-        return $content;
+        echo "engspeeddata=".json_encode($content);
     }
 }
 function stringToFloat($arr){
