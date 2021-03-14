@@ -20,12 +20,12 @@
 				text-align: center;
 			}
 			.input-item{
-				margin:10px 0;
+				margin:20px 0;
 			}
 			.input-item span{
 				font-weight: bold;
 			}
-			.error{color: red;font-size: 12px;text-align: left;margin-left: 89px;}
+			.error{color: red;font-size: 12px;text-align: left;margin-left: 10px;}
 		</style>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
     </head>
@@ -33,16 +33,16 @@
 		<div id="app">
 			<div class="content">
 				<div class="input-item">
-					<span>用户名</span>
+					<span>User Name</span>
 					<input type="text" v-model="userName" />
-					<div class="error" v-show="userNameError">用户名错误</div>
+					<div class="error" v-show="userNameError">User name uncorrected</div>
 				</div>
 				<div class="input-item">
-					<span style="letter-spacing: 8px;">密码</span>
+					<span style="letter-spacing: 1px;">Password</span>
 					<input type="password" v-model="passWord" />
-					<div class="error" v-show="passWordError">密码错误</div>
+					<div class="error" v-show="passWordError">Password uncorrected</div>
 				</div>
-				<button @click="login">登录</button>
+				<button @click="login">Login</button>
 			</div>
 		</div>
         <script>
@@ -60,13 +60,14 @@
 				methods: {
 					login(){
 						if(this.userName!=='admin'){
-							this.userNameError=trues
+							this.userNameError=true
 						}else if(this.passWord!=='123456'){
 							this.userNameError=false
 							this.passWordError=true
 						}else{
 							this.userNameError=false
 							this.passWordError=false
+                                                        sessionStorage.login = 'true'
 							window.location.href='http://localhost:89/PhpProject1/index4.php'
 						}
 					}
