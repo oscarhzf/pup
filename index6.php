@@ -73,6 +73,13 @@
                 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
     <body>
+        <form action="" method="post">
+            <div>
+                <label for="date">Select Date:</label>
+                <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
+                <input type="submit" name="submit" value="Submit"/>
+            </div>
+        </form>
         <div class="noshow">
                <?php
                 require_once './database/update.php';
@@ -117,7 +124,7 @@
 				},
 				mounted() {
                                         if(sessionStorage.login !== 'true'){
-                                            window.location.href='http://localhost:89/PhpProject1/login.php'
+                                            window.location.href='http://localhost:89/PhpProject1/login2.php'
                                         }
 					this._initChart()
 					this.changeChe('Vehicle 1')
@@ -207,46 +214,42 @@
 					changeChe(item){
 						let engspeeddata=[]
 						let engtempdata=[]
+                                                <?php $date = isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>
 						switch (item) {
 							case 'Vehicle 1': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 1);
-                                                                $temp = extractTemp($conn, 1);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 1, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 1, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 2':
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 2);
-                                                                $temp = extractTemp($conn, 2);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 2, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 2, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 3': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 3);
-                                                                $temp = extractTemp($conn, 3);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 3, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 3, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 4': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 4);
-                                                                $temp = extractTemp($conn, 4);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 4, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 4, $date);
+                                                                ?>;
 								break;
 							case 'Vehicle 5': 
                                                                 <?php
-                                                                $speed = extractSpeed($conn, 5);
-                                                                $temp = extractTemp($conn, 5);
-                                                                ?>
-								engspeeddata=<?php echo json_encode($speed);?>;
-								engtempdata=<?php echo json_encode($temp);?>;
+                                                                extractSpeed($conn, 5, $date);
+                                                                echo ";";
+                                                                extractTemp($conn, 5, $date);
+                                                                ?>;
 								break;
 						}
 						let seriesDataspeed = []
@@ -288,7 +291,7 @@
                                       mapTypeId: "terrain",
                                     });
                                     const flightPlanCoordinates = [
-                                      { lat: 37.772, lng: -122.214 },
+                                      { lat: 37.7722, lng: -122.2144 },
                                       { lat: 21.291, lng: -157.821 },
                                       { lat: -18.142, lng: 178.431 },
                                       { lat: -27.467, lng: 153.027 },
