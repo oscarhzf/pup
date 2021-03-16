@@ -14,6 +14,7 @@ if($conn){
 
 updateTemp($conn);
 updateSpeed($conn);
+updateGPS($conn);
 mysqli_close($conn);
 
 function updateTemp($conn){
@@ -70,13 +71,25 @@ function updateGPS($conn){
     $file = "data/gps.txt";
     $lines = file_get_contents($file);
     $line = explode("\n",$lines);
+    $new = 0;
     $num = 0;
+    $error = 0;
     foreach ($line as $li){
         $arr = explode(" ",$li);
-        if(!findDataByDateAndTime($arr[0], $arr[1], 'gps', $conn)){
-            $num += insertGPS($arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $conn);
+        if(count($arr) == 5){
+            if(!findDataByDateAndTime($arr[0], $arr[1], 'gps', $conn)){
+                if($arr[2] >= -90 & $arr[2] <= 90 & $arr[3] >= -180 & $arr[3] <= 180){
+                    $num += insertGPS($arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $conn);  
+                }else{
+                    $error ++;
+                }
+                $new ++;
+            }
         }
     }
+    echo "Update GPS<br>";
+    echo $new." new pieces of data<br>";
+    echo $num." data added to GPS<br>";
     echo $num." data(s) added to GPS";
 }
 function findDataByDateAndTime ($date, $time, $table, $conn){

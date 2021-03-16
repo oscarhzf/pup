@@ -124,7 +124,7 @@
 				},
 				mounted() {
                                         if(sessionStorage.login !== 'true'){
-                                            window.location.href='http://localhost:89/PhpProject1/login2.php'
+                                            window.location.href='login2.php'
                                         }
 					this._initChart()
 					this.changeChe('Vehicle 1')
@@ -214,6 +214,7 @@
 					changeChe(item){
 						let engspeeddata=[]
 						let engtempdata=[]
+                                                let gpsdata=[]
                                                 <?php $date = isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>
 						switch (item) {
 							case 'Vehicle 1': 
@@ -221,6 +222,8 @@
                                                                 extractSpeed($conn, 1, $date);
                                                                 echo ";";
                                                                 extractTemp($conn, 1, $date);
+                                                                echo ";";
+                                                                extractGPS($conn, 1, $date);
                                                                 ?>;
 								break;
 							case 'Vehicle 2':
@@ -228,6 +231,8 @@
                                                                 extractSpeed($conn, 2, $date);
                                                                 echo ";";
                                                                 extractTemp($conn, 2, $date);
+                                                                echo ";";
+                                                                extractGPS($conn, 2, $date);
                                                                 ?>;
 								break;
 							case 'Vehicle 3': 
@@ -235,6 +240,8 @@
                                                                 extractSpeed($conn, 3, $date);
                                                                 echo ";";
                                                                 extractTemp($conn, 3, $date);
+                                                                echo ";";
+                                                                extractGPS($conn, 3, $date);
                                                                 ?>;
 								break;
 							case 'Vehicle 4': 
@@ -242,6 +249,8 @@
                                                                 extractSpeed($conn, 4, $date);
                                                                 echo ";";
                                                                 extractTemp($conn, 4, $date);
+                                                                echo ";";
+                                                                extractGPS($conn, 4, $date);
                                                                 ?>;
 								break;
 							case 'Vehicle 5': 
@@ -249,6 +258,8 @@
                                                                 extractSpeed($conn, 5, $date);
                                                                 echo ";";
                                                                 extractTemp($conn, 5, $date);
+                                                                echo ";";
+                                                                extractGPS($conn, 5, $date);
                                                                 ?>;
 								break;
 						}

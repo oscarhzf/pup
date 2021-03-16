@@ -68,7 +68,7 @@
 							this.userNameError=false
 							this.passWordError=false
                                                         sessionStorage.login = 'true'
-							window.location.href='http://localhost:89/PhpProject1/index6.php'
+							window.location.href='index6.php'
 						}
 					}
 				},
