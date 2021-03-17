@@ -17,7 +17,7 @@
 				width: 100px;
 				background-color: #C0C0C0;
 				border:2px solid #000;
-				margin:0px 50px;       /*box position*/
+				margin:70px 50px;       /*box position*/
 				flex-shrink:0;
                                 height:500px;
 			}
@@ -34,7 +34,7 @@
                             background-color:rgba(0,0,0,0.5)
                         }
 			.content{
-				margin:0px 20px;
+				margin:30px 20px;
 				flex: 1;
 				position: relative;
                                 height:500px;
@@ -51,16 +51,17 @@
 				position: absolute;
 			}
 			.info.w{
-				left: 0;
+				left: 80px;
 				top: 40px;
 			}
 			.info.s{
-				left: 220px;
+				left: 300px;
 				top: 40px;
 			}
                         .info.m{
-				left: 440px;
+				left: 520px;
 				top: 40px;
+                                
 			}
 			.info .title{
 				font-size: 16px;
@@ -214,53 +215,53 @@
 					changeChe(item){
 						let engspeeddata=[]
 						let engtempdata=[]
-                                                let gpsdata=[]
-                                                <?php $date = isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>
+						let gpsdata=[]
+						<?php $date = isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>
 						switch (item) {
 							case 'Vehicle 1': 
-                                                                <?php
-                                                                extractSpeed($conn, 1, $date);
-                                                                echo ";";
-                                                                extractTemp($conn, 1, $date);
-                                                                echo ";";
-                                                                extractGPS($conn, 1, $date);
-                                                                ?>;
+								<?php
+								extractSpeed($conn, 1, $date);
+								echo ";";
+								extractTemp($conn, 1, $date);
+								echo ";";
+								extractGPS($conn, 1, $date);
+								?>;
 								break;
 							case 'Vehicle 2':
-                                                                <?php
-                                                                extractSpeed($conn, 2, $date);
-                                                                echo ";";
-                                                                extractTemp($conn, 2, $date);
-                                                                echo ";";
-                                                                extractGPS($conn, 2, $date);
-                                                                ?>;
+								<?php
+								extractSpeed($conn, 2, $date);
+								echo ";";
+								extractTemp($conn, 2, $date);
+								echo ";";
+								extractGPS($conn, 2, $date);
+								?>;
 								break;
 							case 'Vehicle 3': 
-                                                                <?php
-                                                                extractSpeed($conn, 3, $date);
-                                                                echo ";";
-                                                                extractTemp($conn, 3, $date);
-                                                                echo ";";
-                                                                extractGPS($conn, 3, $date);
-                                                                ?>;
+								<?php
+								extractSpeed($conn, 3, $date);
+								echo ";";
+								extractTemp($conn, 3, $date);
+								echo ";";
+								extractGPS($conn, 3, $date);
+								?>;
 								break;
 							case 'Vehicle 4': 
-                                                                <?php
-                                                                extractSpeed($conn, 4, $date);
-                                                                echo ";";
-                                                                extractTemp($conn, 4, $date);
-                                                                echo ";";
-                                                                extractGPS($conn, 4, $date);
-                                                                ?>;
+								<?php
+								extractSpeed($conn, 4, $date);
+								echo ";";
+								extractTemp($conn, 4, $date);
+								echo ";";
+								extractGPS($conn, 4, $date);
+								?>;
 								break;
 							case 'Vehicle 5': 
-                                                                <?php
-                                                                extractSpeed($conn, 5, $date);
-                                                                echo ";";
-                                                                extractTemp($conn, 5, $date);
-                                                                echo ";";
-                                                                extractGPS($conn, 5, $date);
-                                                                ?>;
+								<?php
+								extractSpeed($conn, 5, $date);
+								echo ";";
+								extractTemp($conn, 5, $date);
+								echo ";";
+								extractGPS($conn, 5, $date);
+								?>;
 								break;
 						}
 						let seriesDataspeed = []
@@ -294,8 +295,30 @@
 				},
 			})
         </script>
-        <script src="map.js">
-                                
+        <script>
+            function initMap() {
+				const map = new google.maps.Map(document.getElementById("map"), {
+					zoom: 3,
+					center: { lat: 49, lng: 76 },
+					mapTypeId: "terrain",
+				});
+				let gps=[]
+				<?php
+				extractGPS($conn, 1, $date);
+				?>;
+				let flightPlanCoordinates = []
+				gps.forEach(item=>{
+					flightPlanCoordinates.push({ lat: item[6], lng: item[7] })
+				})
+				const flightPath = new google.maps.Polyline({
+					path: flightPlanCoordinates,
+					geodesic: true,
+					strokeColor: "#FF0000",
+					strokeOpacity: 1.0,
+					strokeWeight: 2,
+				});
+				flightPath.setMap(map);
+			}                 
         </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF8zxQcSyJHyurdoy4Ef02tMPw7RmvwM4&callback=initMap&libraries=&v=weekly" async></script>
     </body>
