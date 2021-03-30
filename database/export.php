@@ -6,7 +6,8 @@
  * and open the template in the editor.
  */
 
-if(isset($_POST['export'])){
+
+if(isset($_POST['date'])){
     require_once 'config.php';
     $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
     $date = $_POST['date'];
@@ -14,6 +15,12 @@ if(isset($_POST['export'])){
 //    $sql = "SELECT * FROM data ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)==0){
+        ?>
+        <script type="text/javascript">
+            alert("No Data");
+            window.history.go(-1);
+        </script>
+        <?php
         exit;
     }
     header('Content-Type: text/csv; charset=utf-8');

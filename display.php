@@ -10,7 +10,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-<!--        <script type="text/javascript">
+        <script type="text/javascript">
         function viewdata(){
             document.myForm.action="display.php";
             document.myForm.submit();
@@ -23,11 +23,11 @@ and open the template in the editor.
         <form method="POST" name="myForm">
             <div>
                 <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
-                <input type="button" name="submit" value="Submit" onClick="viewdata();"/>
+                <input type="button" value="Submit" onClick="viewdata();"/>
                 <input type="button" name="export" value="CSV Export" onClick="exportdata();"/>
             </div>
-        </form>-->
-        <form method="POST" action="">
+        </form>
+<!--        <form method="POST" action="">
             <div>
                 <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
                 <input type="submit" name="submit" value="Submit"/>
@@ -36,7 +36,7 @@ and open the template in the editor.
         <form method="post" action="database/export.php">
             <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
             <input type="submit" name="export" value="CSV Export"/>
-        </form>
+        </form>-->
         <?php
         // put your code here
         require_once 'config.php';
@@ -82,6 +82,8 @@ and open the template in the editor.
                 </table>
             </div>
         <?php    
+        }else{
+            echo "No Data";
         }
         ?>
     </body>
