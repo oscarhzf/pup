@@ -11,7 +11,8 @@ if(isset($_POST['date'])){
     require_once 'config.php';
     $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
     $date = $_POST['date'];
-    $sql = "SELECT * FROM data WHERE date = '$date' ORDER BY date, time";
+    $datatype = $_POST['datatype'];
+    $sql = "SELECT * FROM $datatype WHERE date = '$date' ORDER BY date, time";
 //    $sql = "SELECT * FROM data ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)==0){
@@ -24,9 +25,17 @@ if(isset($_POST['date'])){
         exit;
     }
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=data.csv');
+    header('Content-Disposition: attachment; filename='.$datatype.'_'.$date.'.csv');
     $output = fopen("php://output", "w");
-    fputcsv($output, array('Date', 'Time', 'Engine Speed (RPM)', 'Temperature (C)', 'Temperature (F)', 'Latitude', 'Longitude', 'ID'));
+    if($datatype == 'engtemp'){
+        fputcsv($output, array('Date', 'Time', 'Engine Temperature (C)', 'ID'));  
+    }
+    elseif($datatype == 'engspeed'){
+        fputcsv($output, array('Date', 'Time', 'Engine Speed (RPM)', 'ID'));
+    }
+    elseif($datatype == 'gps'){
+        fputcsv($output, array('Date', 'Time', 'Latitude', 'Longitude', 'ID'));
+    }
     while($row = mysqli_fetch_assoc($result)){
         fputcsv($output, $row);
     }

@@ -23,20 +23,16 @@ and open the template in the editor.
         <form method="POST" name="myForm">
             <div>
                 <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
-                <input type="button" value="Submit" onClick="viewdata();"/>
+                <select name="datatype" size="1">
+                    <option value="" selected="selected">--Please Select--</option>
+                    <option value="engtemp" <?php if(@$_POST[datatype] == "engtemp"){echo 'selected="selected"';}?>>Engine Temperature</option>
+                    <option value="engspeed" <?php if(@$_POST[datatype] == "engspeed"){echo 'selected="selected"';}?>>Engine Speed</option>
+                    <option value="gps" <?php if(@$_POST[datatype] == "gps"){echo 'selected="selected"';}?>>GPS</option>
+                </select>
+                <input type="button" value="View" onClick="viewdata();"/>
                 <input type="button" name="export" value="CSV Export" onClick="exportdata();"/>
             </div>
         </form>
-<!--        <form method="POST" action="">
-            <div>
-                <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
-                <input type="submit" name="submit" value="Submit"/>
-            </div>
-        </form>
-        <form method="post" action="database/export.php">
-            <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
-            <input type="submit" name="export" value="CSV Export"/>
-        </form>-->
         <?php
         // put your code here
         require_once 'config.php';
@@ -47,43 +43,94 @@ and open the template in the editor.
         else{
             $date = date('Y-m-d');
         }
-        $sql = "SELECT * FROM data WHERE date = '$date' ORDER BY date, time";
-        $result = mysqli_query($conn, $sql);
-        if(!mysqli_num_rows($result)==0){
-        ?>
-            <div>
-                <table>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Speed (RPM)</th>
-                        <th>Temperature (C)</th>
-                        <th>Temperature (F)</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                        <th>ID</th>
-                    </tr>
-                <?php
-                while($row = mysqli_fetch_array($result)){
+        if(isset($_POST['datatype'])){
+            $datatype = $_POST['datatype'];
+            $sql = "SELECT * FROM $datatype WHERE date = '$date' ORDER BY date, time";
+            $result = mysqli_query($conn, $sql);
+            if(!mysqli_num_rows($result)==0){
+                if($datatype == 'engtemp'){
                 ?>
-                    <tr>
-                        <td><?php echo $row["date"];?></td>
-                        <td><?php echo $row["time"];?></td>
-                        <td><?php echo $row["speed"];?></td>
-                        <td><?php echo $row["tempC"];?></td>
-                        <td><?php echo $row["tempF"];?></td>
-                        <td><?php echo $row["latitude"];?></td>
-                        <td><?php echo $row["longitude"];?></td>
-                        <td><?php echo $row["id"];?></td>
-                    </tr>
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Engine Temperature (C)</th>
+                                <th>ID</th>
+                            </tr>
+                        <?php
+                        while($row = mysqli_fetch_array($result)){
+                        ?>
+                            <tr>
+                                <td><?php echo $row["date"];?></td>
+                                <td><?php echo $row["time"];?></td>
+                                <td><?php echo $row["temp"];?></td>
+                                <td><?php echo $row["id"];?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        </table>
+                    </div>
                 <?php
                 }
+                elseif($datatype == 'engspeed'){
                 ?>
-                </table>
-            </div>
-        <?php    
-        }else{
-            echo "No Data";
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Engine Speed (RPM)</th>
+                                <th>ID</th>
+                            </tr>
+                        <?php
+                        while($row = mysqli_fetch_array($result)){
+                        ?>
+                            <tr>
+                                <td><?php echo $row["date"];?></td>
+                                <td><?php echo $row["time"];?></td>
+                                <td><?php echo $row["speed"];?></td>
+                                <td><?php echo $row["id"];?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        </table>
+                    </div>
+                <?php
+                }
+                elseif($datatype == 'gps'){
+                ?>
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>ID</th>
+                            </tr>
+                        <?php
+                        while($row = mysqli_fetch_array($result)){
+                        ?>
+                            <tr>
+                                <td><?php echo $row["date"];?></td>
+                                <td><?php echo $row["time"];?></td>
+                                <td><?php echo $row["latitude"];?></td>
+                                <td><?php echo $row["longitude"];?></td>
+                                <td><?php echo $row["id"];?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        </table>
+                    </div>
+                <?php
+                }
+            }else{
+                echo "No Data";
+            }
         }
         ?>
     </body>
