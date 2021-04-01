@@ -53,19 +53,19 @@ and open the template in the editor.
                     <div>
                         <table>
                             <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Engine Temperature (C)</th>
-                                <th>ID</th>
+                                <th width="100px">Date</th>
+                                <th width="100px">Time</th>
+                                <th width="200px">Engine Temperature (C)</th>
+                                <th width="50px">ID</th>
                             </tr>
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
                             <tr>
-                                <td><?php echo $row["date"];?></td>
-                                <td><?php echo $row["time"];?></td>
-                                <td><?php echo $row["temp"];?></td>
-                                <td><?php echo $row["id"];?></td>
+                                <th><?php echo $row["date"];?></th>
+                                <th><?php echo $row["time"];?></th>
+                                <th><?php echo $row["temp"];?></th>
+                                <th><?php echo $row["id"];?></th>
                             </tr>
                         <?php
                         }
@@ -79,19 +79,19 @@ and open the template in the editor.
                     <div>
                         <table>
                             <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Engine Speed (RPM)</th>
-                                <th>ID</th>
+                                <th width="100px">Date</th>
+                                <th width="100px">Time</th>
+                                <th width="200px">Engine Speed (RPM)</th>
+                                <th width="50px">ID</th>
                             </tr>
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
                             <tr>
-                                <td><?php echo $row["date"];?></td>
-                                <td><?php echo $row["time"];?></td>
-                                <td><?php echo $row["speed"];?></td>
-                                <td><?php echo $row["id"];?></td>
+                                <th><?php echo $row["date"];?></th>
+                                <th><?php echo $row["time"];?></th>
+                                <th><?php echo $row["engspeed"];?></th>
+                                <th><?php echo $row["id"];?></th>
                             </tr>
                         <?php
                         }
@@ -105,21 +105,21 @@ and open the template in the editor.
                     <div>
                         <table>
                             <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Latitude</th>
-                                <th>Longitude</th>
-                                <th>ID</th>
+                                <th width="100px">Date</th>
+                                <th width="100px">Time</th>
+                                <th width="100px">Latitude</th>
+                                <th width="100px">Longitude</th>
+                                <th width="50px">ID</th>
                             </tr>
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
                             <tr>
-                                <td><?php echo $row["date"];?></td>
-                                <td><?php echo $row["time"];?></td>
-                                <td><?php echo $row["latitude"];?></td>
-                                <td><?php echo $row["longitude"];?></td>
-                                <td><?php echo $row["id"];?></td>
+                                <th><?php echo $row["date"];?></th>
+                                <th><?php echo $row["time"];?></th>
+                                <th><?php echo $row["latitude"];?></th>
+                                <th><?php echo $row["longitude"];?></th>
+                                <th><?php echo $row["id"];?></th>
                             </tr>
                         <?php
                         }
