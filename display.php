@@ -24,15 +24,15 @@ and open the template in the editor.
             document.myForm.submit();
         }
         function exportdata(){
-            document.myForm.action="database/export.php";
+            document.myForm.action="database/export_range.php";
             document.myForm.submit();
         }
         </script>
         <form method="POST" name="myForm">
             <div>
-                <input type="date" name="date" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
+                From:<input type="date" name="start" value="<?php echo isset($_POST['start'])? $_POST['start'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
+                To:<input type="date" name="end" value="<?php echo isset($_POST['end'])? $_POST['end'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
                 <select name="datatype" size="1">
-                    <option value="" selected="selected">--Please Select--</option>
                     <option value="engtemp" <?php if(@$_POST[datatype] == "engtemp"){echo 'selected="selected"';}?>>Engine Temperature</option>
                     <option value="engspeed" <?php if(@$_POST[datatype] == "engspeed"){echo 'selected="selected"';}?>>Engine Speed</option>
                     <option value="gps" <?php if(@$_POST[datatype] == "gps"){echo 'selected="selected"';}?>>GPS</option>
@@ -41,19 +41,38 @@ and open the template in the editor.
                 <input type="button" name="export" value="CSV Export" onClick="exportdata();"/>
             </div>
         </form>
+<!--        <form method="POST" name="myForm" action="database/export_range.php">
+            <div>
+                From:<input type="date" name="start" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
+                To:<input type="date" name="end" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
+                <select name="datatype" size="1">
+                    <option value="" selected="selected">--Please Select--</option>
+                    <option value="engtemp" <?php if(@$_POST[datatype] == "engtemp"){echo 'selected="selected"';}?>>Engine Temperature</option>
+                    <option value="engspeed" <?php if(@$_POST[datatype] == "engspeed"){echo 'selected="selected"';}?>>Engine Speed</option>
+                    <option value="gps" <?php if(@$_POST[datatype] == "gps"){echo 'selected="selected"';}?>>GPS</option>
+                </select>
+                <input type="submit" name="export" value="CSV Export"/>
+            </div>
+        </form>-->
         <?php
         // put your code here
         require_once 'config.php';
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
-        if(isset($_POST['date'])){
-            $date = $_POST['date'];
+        if(isset($_POST['start'])){
+            $start = $_POST['start'];
         }
         else{
-            $date = date('Y-m-d');
+            $start = date('Y-m-d');
+        }
+        if(isset($_POST['end'])){
+            $end = $_POST['end'];
+        }
+        else{
+            $start = date('Y-m-d');
         }
         if(isset($_POST['datatype'])){
             $datatype = $_POST['datatype'];
-            $sql = "SELECT * FROM $datatype WHERE date = '$date' ORDER BY date, time";
+            $sql = "SELECT * FROM $datatype WHERE date BETWEEN '$start' AND '$end' ORDER BY date, time";
             $result = mysqli_query($conn, $sql);
             if(!mysqli_num_rows($result)==0){
                 if($datatype == 'engtemp'){
@@ -98,7 +117,7 @@ and open the template in the editor.
                             <tr class='<?php echo $row["engspeed"]>3999?"red":($row["engspeed"]<20?"blue":"");?>'>
                                 <th><?php echo $row["date"];?></th>
                                 <th><?php echo $row["time"];?></th>
-                                <th><?php echo $row["engspeed"];?></th>
+                                <th><?php echo $row["speed"];?></th>
                                 <th><?php echo $row["id"];?></th>
                             </tr>
                         <?php
