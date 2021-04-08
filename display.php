@@ -8,6 +8,14 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <style>
+            .red{
+                color:red;
+            }
+            .blue{
+                color:blue;
+            }
+        </style>
     </head>
     <body>
         <script type="text/javascript">
@@ -61,7 +69,7 @@ and open the template in the editor.
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
-                            <tr>
+                            <tr class='<?php echo $row["temp"]>200?"red":($row["temp"]<20?"blue":"");?>'>
                                 <th><?php echo $row["date"];?></th>
                                 <th><?php echo $row["time"];?></th>
                                 <th><?php echo $row["temp"];?></th>
@@ -87,7 +95,7 @@ and open the template in the editor.
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
-                            <tr>
+                            <tr class='<?php echo $row["engspeed"]>3999?"red":($row["engspeed"]<20?"blue":"");?>'>
                                 <th><?php echo $row["date"];?></th>
                                 <th><?php echo $row["time"];?></th>
                                 <th><?php echo $row["engspeed"];?></th>
