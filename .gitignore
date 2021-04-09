@@ -1,1 +1,4 @@
 /nbproject/private/
+/database/export.php
+/database/extract_new.php
+/database/update_new.php
