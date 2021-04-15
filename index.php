@@ -5,14 +5,17 @@
 			#app{
 				display: flex;
 			}
-                        .noshow{
-                            width:0;
-                            height:0;
-                            visibility: hidden;
-                        }
-                        #map {
-                            height: 100%;
-                          }
+			.noshow{
+				width:0;
+				height:0;
+				visibility: hidden;
+			}
+			#map {
+				height: 100%;
+			}
+			#map2 {
+				height: 100%;
+			}
 			.side{
 				width: 100px;
 				background-color: #C0C0C0;
@@ -30,9 +33,9 @@
                                 vertical-align: middle;
 				cursor: pointer;
 			}
-                        .checkedItem{
-                            background-color:rgba(0,0,0,0.5)
-                        }
+			.checkedItem{
+				background-color:rgba(0,0,0,0.5)
+			}
 			.content{
 				margin:30px 20px;
 				flex: 1;
@@ -41,7 +44,7 @@
 			}
 			.content img{
 				margin: 100px;
-                                width: 50%;
+                width: 50%;
 			}
 			.info{
 				width: 200px;
@@ -58,10 +61,13 @@
 				left: 300px;
 				top: 40px;
 			}
-                        .info.m{
+            .info.m{
 				left: 520px;
-				top: 40px;
-                                
+				top: 40px;             
+			}
+			.info.m2{
+				left: 740px;
+				top: 40px;             
 			}
 			.info .title{
 				font-size: 16px;
@@ -71,7 +77,7 @@
 		</style>
         <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-                <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
     <body>
         <form action="" method="post">
@@ -101,20 +107,35 @@
 				<div class="info s" @click="clickS">
 					<div class="title">Engine Speed</div>
 				</div>
-                                <div class="info m" @click="clickM">
+                <div class="info m" @click="clickM">
 					<div class="title">Map</div>
+				</div>
+				<div class="info m2" @click="clickM2">
+					<div class="title">Trajectories</div>
 				</div>
 				<img src='./picture/pupve.jpg' alt="">
 			</div>
 			<div class="content chart" v-show="!showChe">
-                                <div id="map" style="width:1000px;height:500px;top:40px" v-show="clickChart==='Map'"></div>
+                <div id="map" style="width:1000px;height:500px;top:40px" v-show="clickChart==='Map'"></div>
+                <div id="map2" style="width:1000px;height:500px;top:40px" v-show="clickChart==='Map2'"></div>
 				<div id="container" style="width:1000px;height:500px;top:60px" v-show="clickChart==='Engine Speed'"></div>
 				<div id="container2" style="width:1000px;height:500px;top:60px" v-show="clickChart==='Engine Temperature'"></div>
 			</div>
 		</div>
         
-        <script>
-						
+        <script>		
+			const m = {
+				map:'',
+				map2:''
+			}
+			const f = {
+				flightPath:'',
+				flightPath1:'',
+				flightPath2:'',
+				flightPath3:'',
+				flightPath4:'',
+				flightPath5:''
+			}
 			var app = new Vue({
 				el: '#app',
 				data: {
@@ -126,9 +147,9 @@
 					chart1:null,
 				},
 				mounted() {
-                                        if(sessionStorage.login !== 'true'){
-                                            window.location.href='login.php'
-                                        }
+					if(sessionStorage.login !== 'true'){
+						window.location.href='login.php'
+					}
 					this._initChart()
 					this.changeChe('Vehicle 1')
 				},
@@ -228,7 +249,7 @@
 								?>;
 								removeline()
 								clearMarkers()
-								addline(1)
+								addline(1,m.map,'')
 								break;
 							case 'Vehicle 2':
 								<?php
@@ -238,7 +259,7 @@
 								?>;
 								removeline()
 								clearMarkers()
-								addline(2)
+								addline(2,m.map,'')
 								break;
 							case 'Vehicle 3': 
 								<?php
@@ -248,7 +269,7 @@
 								?>;
 								removeline()
 								clearMarkers()
-								addline(3)
+								addline(3,m.map,'')
 								break;
 							case 'Vehicle 4': 
 								<?php
@@ -258,7 +279,7 @@
 								?>;
 								removeline()
 								clearMarkers()
-								addline(4)
+								addline(4,m.map,'')
 								break;
 							case 'Vehicle 5': 
 								<?php
@@ -268,9 +289,9 @@
 								?>;
 								removeline()
 								clearMarkers()
-								addline(5)
+								addline(5,m.map,'')
 								break;
-						}
+							}
 						let seriesDataspeed = []
 						engspeeddata.forEach(item=>{
 							seriesDataspeed.push([Date.UTC(item[0], item[1]-1, item[2],item[3],item[4],item[5]), item[6] ])
@@ -280,12 +301,12 @@
 							seriesDatatemp.push([Date.UTC(item[0], item[1]-1, item[2],item[3],item[4],item[5]), item[6] ])
 						})
 						this.chart.series[0].setData(seriesDataspeed);
-                        this.chart1.series[0].setData(seriesDatatemp);
+						this.chart1.series[0].setData(seriesDatatemp);
 					},
 					clickItem(item){
 						this.showChe = true
 						this.checkedItem = item
-                                                this.changeChe(item);
+                        this.changeChe(item);
 					},
 					clickW(){
 						this.clickChart = 'Engine Temperature'
@@ -295,93 +316,107 @@
 						this.clickChart = 'Engine Speed'
 						this.showChe = false
 					},
-                                            clickM(){
-                                                this.clickChart = 'Map'
+                    clickM(){
+                        this.clickChart = 'Map'
 						this.showChe = false
-                                            }
+                    },
+					clickM2(){
+                        this.clickChart = 'Map2'
+						this.showChe = false
+                    }
 				},
 			})
-			let map;
-						let flightPath;
-						let markers = [];
-						function initMap() {
-							map = new google.maps.Map(document.getElementById("map"), {
-								zoom: 15,
-								center: { lat: 40.416, lng: -86.919 },
-								mapTypeId: "terrain",
-							});
-							addline(1)
-						}
-						
-						function addline(num){
-							let gps=[]
-							switch (num) {
-								case 1: 
-									<?php
-									extractGPS($conn, 1, $date);
-									?>;
-									break;
-								case 2:
-									<?php
-									extractGPS($conn, 2, $date);
-									?>;
-									break;
-								case 3: 
-									<?php
-									extractGPS($conn, 3, $date);
-									?>;
-									break;
-								case 4: 
-									<?php
-									extractGPS($conn, 4, $date);
-									?>;
-									break;
-								case 5: 
-									<?php
-									extractGPS($conn, 5, $date);
-									?>;
-									break;
-							}
-							
-							let flightPlanCoordinates = []
-							gps.forEach(item=>{
-								flightPlanCoordinates.push({ lat: item[6], lng: item[7] })
-							})
-							flightPath = new google.maps.Polyline({
-								path: flightPlanCoordinates,
-								geodesic: true,
-								strokeColor: "#FF0000",
-								strokeOpacity: 1.0,
-								strokeWeight: 2,
-							});
-							flightPath.setMap(map);
-							addMarker(flightPlanCoordinates[0], map, 'Start');
-							addMarker(flightPlanCoordinates[flightPlanCoordinates.length-1], map, 'End');
-						}
+			let markers = [];
+			let markers2 = [];
+			function initMap() {
+				m.map = new google.maps.Map(document.getElementById("map"), {
+					zoom: 12,
+					center: { lat: 40.416, lng: -86.919 },
+					mapTypeId: "terrain",
+				});
+				addline(1,m.map,'')
+				m.map2 = new google.maps.Map(document.getElementById("map2"), {
+					zoom: 12,
+					center: { lat: 40.416, lng: -86.919 },
+					mapTypeId: "terrain",
+				});
+				addline(1,m.map2,1)
+				addline(2,m.map2,2)
+				addline(3,m.map2,3)
+				addline(4,m.map2,4)
+				addline(5,m.map2,5)
+			}
+			
+			function addline(num,map,n){
+				let gps=[]
+				switch (num) {
+					case 1: 
+						<?php
+						extractGPS($conn, 1, $date);
+						?>;
+						break;
+					case 2:
+						<?php
+						extractGPS($conn, 2, $date);
+						?>;
+						break;
+					case 3: 
+						<?php
+						extractGPS($conn, 3, $date);
+						?>;
+						break;
+					case 4: 
+						<?php
+						extractGPS($conn, 4, $date);
+						?>;
+						break;
+					case 5: 
+						<?php
+						extractGPS($conn, 5, $date);
+						?>;
+						break;
+				}
+				let flightPlanCoordinates = []
+				gps.forEach(item=>{
+					flightPlanCoordinates.push({ lat: item[6], lng: item[7] })
+				})
+				let center = new google.maps.LatLng(flightPlanCoordinates[0].lat,flightPlanCoordinates[0].lng);
+            	map.panTo(center);
+				arr = ['#FF0000','#f47920','#b2d235','#2a5caa','#6f60aa']
+				f['flightPath'+n] = new google.maps.Polyline({
+					path: flightPlanCoordinates,
+					geodesic: true,
+					strokeColor: arr[num],
+					strokeOpacity: 1.0,
+					strokeWeight: 2,
+				});
+				f['flightPath'+n].setMap(map);
+				addMarker(flightPlanCoordinates[0], map, 'Start');
+				addMarker(flightPlanCoordinates[flightPlanCoordinates.length-1], map, 'End');
+			}
 
-						function removeline(){
-							flightPath.setMap(null);
-						}
+			function removeline(){
+				f.flightPath.setMap(null);
+			}
 
-						function addMarker(location, map, label) {
-							const marker = new google.maps.Marker({
-								position: location,
-								label: label,
-								map: map,
-							});
-							markers.push(marker);
-						}
-						// Sets the map on all markers in the array.
-						function setMapOnAll(map) {
-							for (let i = 0; i < markers.length; i++) {
-								markers[i].setMap(map);
-							}
-						}
-
-						// Removes the markers from the map, but keeps them in the array.
-						function clearMarkers() {
-							setMapOnAll(null);
-						}
+			function addMarker(location, map, label) {
+				const marker = new google.maps.Marker({
+					position: location,
+					label: label,
+					map: map,
+				});
+				markers.push(marker);
+			}
+			// Sets the map on all markers in the array.
+			function setMapOnAll(map) {
+				for (let i = 0; i < markers.length; i++) {
+					markers[i].setMap(map);
+				}
+			}
+			// Removes the markers from the map, but keeps them in the array.
+			function clearMarkers() {
+				setMapOnAll(null);
+			}
         </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF8zxQcSyJHyurdoy4Ef02tMPw7RmvwM4&callback=initMap&libraries=&v=weekly" async></script>
     </body>
