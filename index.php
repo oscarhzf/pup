@@ -87,7 +87,8 @@
                 <input type="submit" name="submit" value="Submit"/>
             </div>
         </form>
-        <button onclick="window.open('display.php')", type="submit">Data</button>
+	<button onclick="window.open('display.php')", type="submit">Data</button>
+	<button onclick="window.open('scheduler.php')", type="submit">Scheduler</button>
         <div class="noshow">
                <?php
                 require_once './database/update.php';

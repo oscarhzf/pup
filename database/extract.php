@@ -58,9 +58,17 @@ function extractGPS($conn, $id, $date){
             $time = explode(':', $value[1]);
             $latitude = $value[2];
             $longitude = $value[3];
+            $altitude = $value[4];
+            $speed = $value[5];
+            $fix_quality = $value[6];
+            $satellites = $value[7];
             $svalue = array_merge($date, $time);
             $svalue[] = $latitude;
             $svalue[] = $longitude;
+            $svalue[] = $altitude;
+            $svalue[] = $speed;
+            $svalue[] = $fix_quality;
+            $svalue[] = $satellites;
             $num = stringToFloat($svalue);
             $content[] = $num;
         }

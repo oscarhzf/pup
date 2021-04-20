@@ -36,24 +36,12 @@ and open the template in the editor.
                     <option value="engtemp" <?php if(@$_POST[datatype] == "engtemp"){echo 'selected="selected"';}?>>Engine Temperature</option>
                     <option value="engspeed" <?php if(@$_POST[datatype] == "engspeed"){echo 'selected="selected"';}?>>Engine Speed</option>
                     <option value="gps" <?php if(@$_POST[datatype] == "gps"){echo 'selected="selected"';}?>>GPS</option>
+                    <option value="all" <?php if(@$_POST[datatype] == "all"){echo 'selected="selected"';}?>>All</option>
                 </select>
                 <input type="button" value="View" onClick="viewdata();"/>
                 <input type="button" name="export" value="CSV Export" onClick="exportdata();"/>
             </div>
         </form>
-<!--        <form method="POST" name="myForm" action="database/export_range.php">
-            <div>
-                From:<input type="date" name="start" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
-                To:<input type="date" name="end" value="<?php echo isset($_POST['date'])? $_POST['date'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
-                <select name="datatype" size="1">
-                    <option value="" selected="selected">--Please Select--</option>
-                    <option value="engtemp" <?php if(@$_POST[datatype] == "engtemp"){echo 'selected="selected"';}?>>Engine Temperature</option>
-                    <option value="engspeed" <?php if(@$_POST[datatype] == "engspeed"){echo 'selected="selected"';}?>>Engine Speed</option>
-                    <option value="gps" <?php if(@$_POST[datatype] == "gps"){echo 'selected="selected"';}?>>GPS</option>
-                </select>
-                <input type="submit" name="export" value="CSV Export"/>
-            </div>
-        </form>-->
         <?php
         // put your code here
         require_once 'config.php';
@@ -136,6 +124,10 @@ and open the template in the editor.
                                 <th width="100px">Time</th>
                                 <th width="100px">Latitude</th>
                                 <th width="100px">Longitude</th>
+                                <th width="100px">Altitude (m)</th>
+                                <th width="100px">Speed (m/s)</th>
+                                <th width="100px">Fix Quality</th>
+                                <th width="100px">Number of Satellites</th>
                                 <th width="50px">ID</th>
                             </tr>
                         <?php
@@ -146,6 +138,10 @@ and open the template in the editor.
                                 <th><?php echo $row["time"];?></th>
                                 <th><?php echo $row["latitude"];?></th>
                                 <th><?php echo $row["longitude"];?></th>
+                                <th><?php echo $row["altitude"];?></th>
+                                <th><?php echo $row["speed"];?></th>
+                                <th><?php echo $row["fix_quality"];?></th>
+                                <th><?php echo $row["satellites"];?></th>
                                 <th><?php echo $row["id"];?></th>
                             </tr>
                         <?php

@@ -30,7 +30,7 @@ function updateTemp($conn){
         if(count($arr) == 4){
             if(!findDataByDateAndTime($arr[0], $arr[1], 'engtemp', $conn)){
                 if($arr[2] >= 0 & $arr[2] <= 300){
-                    $num += insertTemp($arr[0], $arr[1], $arr[2], $arr[3], $conn);  
+                    $num += insertTemp($arr[0], $arr[1], $arr[2], 1, $conn);  // Set all id to 1
                 }else{
                     $error ++;
                 }
@@ -77,10 +77,10 @@ function updateGPS($conn){
     $error = 0;
     foreach ($line as $li){
         $arr = explode(" ",$li);
-        if(count($arr) == 5){
+        if(count($arr) == 9){
             if(!findDataByDateAndTime($arr[0], $arr[1], 'gps', $conn)){
                 if($arr[2] >= -90 & $arr[2] <= 90 & $arr[3] >= -180 & $arr[3] <= 180){
-                    $num += insertGPS($arr[0], $arr[1], $arr[2], $arr[3], 1, $conn);  // Set all id to 1
+                    $num += insertGPS($arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $arr[5], $arr[6], $arr[7], 1, $conn);  // Set all id to 1
                 }else{
                     $error ++;
                 }
@@ -123,9 +123,9 @@ function insertSpeed($date, $time, $speed, $id, $conn){
     }
     return $flag;
 }
-function insertGPS($date, $time, $latitude, $longitude, $id, $conn){
+function insertGPS($date, $time, $latitude, $longitude, $altitude, $speed, $fix_quality, $satellites, $id, $conn){
     $flag = 0;
-    $sql = "INSERT INTO gps VALUES ('$date', '$time', '$latitude', '$longitude', '$id')";
+    $sql = "INSERT INTO gps VALUES ('$date', '$time', '$latitude', '$longitude', '$altitude', '$speed', '$fix_quality', '$satellites', '$id')";
     if(mysqli_query($conn, $sql)){
         $flag = 1;
     }else{
