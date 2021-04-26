@@ -1,4 +1,3 @@
-#!/opt/bitnami/php/bin/php
 <?php
 
 /* 
@@ -7,7 +6,7 @@
  * and open the template in the editor.
  */
 
-require_once '/home/bitnami/htdocs/config.php';
+require_once 'config.php';
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
 if($conn){
     echo "Database Connected"."<br><br>";
@@ -19,7 +18,7 @@ updateGPS($conn);
 mysqli_close($conn);
 
 function updateTemp($conn){
-    $file = "/home/bitnami/htdocs/data/engtemp.txt";
+    $file = "data/temp_data.txt";
     $lines = file_get_contents($file);
     $line = explode("\n",$lines);
     $new = 0;
@@ -44,7 +43,7 @@ function updateTemp($conn){
     echo $error." error(s)<br><br>";
 }
 function updateSpeed($conn){
-    $file = "/home/bitnami/htdocs/data/rpm_data.txt";
+    $file = "data/rpm_data.txt";
     $lines = file_get_contents($file);
     $line = explode("\n",$lines);
     $new = 0;
@@ -69,7 +68,7 @@ function updateSpeed($conn){
     echo $error." error(s)<br><br>";
 }
 function updateGPS($conn){
-    $file = "/home/bitnami/htdocs/data/gps_data.txt";
+    $file = "data/gps_data.txt";
     $lines = file_get_contents($file);
     $line = explode("\n",$lines);
     $new = 0;

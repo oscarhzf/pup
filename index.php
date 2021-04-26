@@ -20,9 +20,38 @@
 				width: 100px;
 				background-color: #C0C0C0;
 				border:2px solid #000;
-				margin:70px 50px;       /*box position*/
-				flex-shrink:0;
-                                height:500px;
+				margin:70px 50px;
+                height:500px;
+			}
+			.legend{
+				width: 100px;
+				margin:70px 50px;
+                height:500px;
+			}
+			.legend div{
+				margin:10px 0;
+			}
+			.legend div::after{
+				content:'';
+				display:inline-block;
+				width: 50px;
+				height: 20px;
+				margin-left:5px;
+			}
+			.legend div:nth-child(1)::after{
+				background-color:#FF0000;
+			}
+			.legend div:nth-child(2)::after{
+				background-color:#f47920;
+			}
+			.legend div:nth-child(3)::after{
+				background-color:#b2d235;
+			}
+			.legend div:nth-child(4)::after{
+				background-color:#2a5caa;
+			}
+			.legend div:nth-child(5)::after{
+				background-color:#6f60aa;
 			}
 			.che{
 				width: 100%;
@@ -30,17 +59,17 @@
 				line-height: 100px;
 				font-size: 18px;
 				text-align: center;
-                                vertical-align: middle;
+                vertical-align: middle;
 				cursor: pointer;
 			}
 			.checkedItem{
 				background-color:rgba(0,0,0,0.5)
 			}
 			.content{
+				width: 1000px;
 				margin:30px 20px;
-				flex: 1;
 				position: relative;
-                                height:500px;
+                height:500px;
 			}
 			.content img{
 				margin: 100px;
@@ -121,6 +150,9 @@
                 <div id="map2" style="width:1000px;height:500px;top:40px" v-show="clickChart==='Map2'"></div>
 				<div id="container" style="width:1000px;height:500px;top:60px" v-show="clickChart==='Engine Speed'"></div>
 				<div id="container2" style="width:1000px;height:500px;top:60px" v-show="clickChart==='Engine Temperature'"></div>
+			</div>
+			<div class="legend" v-show="!showChe">
+				<div v-for="item in che" :key="item">{{item}}</div>
 			</div>
 		</div>
         
