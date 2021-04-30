@@ -1,21 +1,27 @@
 <?php
 
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Extract Data
+ * PUP-1, 2021 ABE Capston
+ * Agricultural and Biological Engineering Department, Purdue University
+ * 
+ * Extract require data from database.
  */
 
+// Connect database
 require_once 'config.php';
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
 if(!$conn){
     die("Database Connection Failed " . mysqli_connect_error()."<br><br>");
 }
+
+// Extract temperature data
 function extractTemp($conn, $id, $date){
     $sql = "SELECT * From engtemp WHERE id = '$id' AND date = '$date' ORDER BY date, time";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
+//        Organize the data into the required format
         while($row = mysqli_fetch_assoc($result)){
             $value = array_values($row);
             $date = explode('-', $value[0]);
@@ -34,6 +40,7 @@ function extractSpeed($conn, $id, $date){
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
+//        Organize the data into the required format
         while($row = mysqli_fetch_assoc($result)){
             $value = array_values($row);
             $date = explode('-', $value[0]);
@@ -52,6 +59,7 @@ function extractGPS($conn, $id, $date){
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)>0){
         $content = array();
+//        Organize the data into the required format
         while($row = mysqli_fetch_assoc($result)){
             $value = array_values($row);
             $date = explode('-', $value[0]);
@@ -75,6 +83,8 @@ function extractGPS($conn, $id, $date){
         echo "gps=".json_encode($content);
     }
 }
+
+// Converts a string to a floating point number
 function stringToFloat($arr){
     foreach($arr as $k => $n){
         $arr[$k] = (float)$n;

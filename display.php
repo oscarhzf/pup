@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Display Page
+PUP-1, 2021 ABE Capston
+Agricultural and Biological Engineering Department, Purdue University
+
+This page can preview the data on selected data and export it as CSV file.
 -->
 <html>
     <head>
@@ -18,6 +20,7 @@ and open the template in the editor.
         </style>
     </head>
     <body>
+        <!-- View and export action -->
         <script type="text/javascript">
         function viewdata(){
             document.myForm.action="display.php";
@@ -28,6 +31,8 @@ and open the template in the editor.
             document.myForm.submit();
         }
         </script>
+        
+        <!-- Data selection, data type pull down manu, view and export button -->
         <form method="POST" name="myForm">
             <div>
                 From:<input type="date" name="start" value="<?php echo isset($_POST['start'])? $_POST['start'] : date('Y-m-d');?>" max="<?php echo date('Y-m-d'); ?>"/>
@@ -43,8 +48,8 @@ and open the template in the editor.
             </div>
         </form>
         <?php
-        // put your code here
-        require_once 'config.php';
+        # Connect database
+        require_once 'database/config.php';
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
         if(isset($_POST['start'])){
             $start = $_POST['start'];
@@ -58,7 +63,10 @@ and open the template in the editor.
         else{
             $start = date('Y-m-d');
         }
+        
+        # Display data
         if(isset($_POST['datatype'])){
+            # Query data
             $datatype = $_POST['datatype'];
             $sql = "SELECT * FROM $datatype WHERE date BETWEEN '$start' AND '$end' ORDER BY date, time";
             $result = mysqli_query($conn, $sql);
@@ -67,6 +75,7 @@ and open the template in the editor.
                 ?>
                     <div>
                         <table>
+                            <!-- Create table and header line -->
                             <tr>
                                 <th width="100px">Date</th>
                                 <th width="100px">Time</th>
@@ -76,6 +85,7 @@ and open the template in the editor.
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
+                            <!-- Add Data-->
                             <tr class='<?php echo $row["temp"]>200?"red":($row["temp"]<20?"blue":"");?>'>
                                 <th><?php echo $row["date"];?></th>
                                 <th><?php echo $row["time"];?></th>
@@ -93,6 +103,7 @@ and open the template in the editor.
                 ?>
                     <div>
                         <table>
+                            <!-- Create table and header line -->
                             <tr>
                                 <th width="100px">Date</th>
                                 <th width="100px">Time</th>
@@ -102,6 +113,7 @@ and open the template in the editor.
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
+                            <!-- Add Data-->
                             <tr class='<?php echo $row["engspeed"]>3999?"red":($row["engspeed"]<20?"blue":"");?>'>
                                 <th><?php echo $row["date"];?></th>
                                 <th><?php echo $row["time"];?></th>
@@ -119,6 +131,7 @@ and open the template in the editor.
                 ?>
                     <div>
                         <table>
+                            <!-- Create table and header line -->
                             <tr>
                                 <th width="100px">Date</th>
                                 <th width="100px">Time</th>
@@ -133,6 +146,7 @@ and open the template in the editor.
                         <?php
                         while($row = mysqli_fetch_array($result)){
                         ?>
+                            <!-- Add Data-->
                             <tr>
                                 <th><?php echo $row["date"];?></th>
                                 <th><?php echo $row["time"];?></th>

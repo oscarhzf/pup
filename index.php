@@ -1,4 +1,11 @@
 <!DOCTYPE HTML>
+<!--
+Index Page
+PUP-1, 2021 ABE Capston
+Agricultural and Biological Engineering Department, Purdue University
+
+This script controls the style of the home page to visually display the data.
+-->
 <html>
     <head>
 		<style>
@@ -120,7 +127,7 @@
 	<button onclick="window.open('scheduler.php')", type="submit">Scheduler</button>
         <div class="noshow">
                <?php
-                require_once './database/update.php';
+//                require_once './database/update.php';
                 require_once './database/extract.php';
                 ?>
         </div>

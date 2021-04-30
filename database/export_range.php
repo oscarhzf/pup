@@ -1,28 +1,32 @@
 <?php
 
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Data Export
+ * PUP-1, 2021 ABE Capston
+ * Agricultural and Biological Engineering Department, Purdue University
+ * 
+ * Export selected data as CSV file.
  */
 
 
 if(isset($_POST['datatype'])){
+//    Connect to database
     require_once 'config.php';
     $conn = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_Name);
+//    Headers of CSV files
     $headers = array(
         array('Date', 'Time', 'Engine Temperature (C)', 'ID'),
         array('Date', 'Time', 'Engine Speed (RPM)', 'ID'),
         array('Date', 'Time', 'Latitude', 'Longitude', 'Altitude (m)', 'Speed (m/s)', 'Fix Quality', 'Number of Satellites', 'ID')
     );
+//    Get the selected range of time and data type
     $start = $_POST['start'];
     $end = $_POST['end'];
     $datatype = $_POST['datatype'];
     if ($datatype != 'all'){
-        
         $sql = "SELECT * FROM $datatype WHERE date BETWEEN '$start' AND '$end' ORDER BY date, time";
-    //    $sql = "SELECT * FROM data ORDER BY date, time";
         $result = mysqli_query($conn, $sql);
+//        If no data in selected data return an alarm
         if(mysqli_num_rows($result)==0){
             ?>
             <script type="text/javascript">
@@ -32,9 +36,11 @@ if(isset($_POST['datatype'])){
             <?php
             exit;
         }
+//        Create CSV file
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename='.$datatype.'_'.$start.'-'.$end.'.csv');
         $output = fopen("php://output", "w");
+//        Write data into CSV file
         if($datatype == 'engtemp'){
             fputcsv($output, $headers[0]);  
         }
@@ -50,6 +56,7 @@ if(isset($_POST['datatype'])){
         mysqli_query($conn, $sql);
     }
     else{
+//        Export all types of data together in one zip file
         $data = array('engtemp', 'engspeed', 'gps');
         // create your zip file
         $zipname = $start.'-'.$end.'.zip';
