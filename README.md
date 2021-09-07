@@ -27,4 +27,4 @@ We would also like to share our cooperator PUP-2 team's [repository](https://git
 
 If you have any questions or comments, feel free to contact us! We are more than happy to help you and improve our code meanwhile.
 
-Oscar Huang, huan1485@purdue.edu
+Oscar Huang, huan1485@purdue.edu / oscarhzf@outlook.com
